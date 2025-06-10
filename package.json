@@ -1,0 +1,18 @@
+{
+  "name": "puzzle-batcher",
+  "version": "0.0.1",
+  "devDependencies": {
+    "shadow-cljs": "^2.22.10"
+  },
+  "dependencies": {
+    "chess.js": "^1.0.0-beta.4",
+    "chessground": "^8.3.7",
+    "daisyui": "^2.51.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwindcss": "^3.3.1"
+  },
+  "scripts": {
+    "css": "tailwindcss -i ./global.css -o ./public/style.css --watch"
+  }
+}

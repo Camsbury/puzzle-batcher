@@ -1,0 +1,60 @@
+{:paths ["src/server"
+         "src/client"
+         "resources"]
+ :deps  {;; clj
+         org.clojure/data.csv                {:mvn/version "1.0.1"}
+         camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.3"}
+         wing/wing                           {:mvn/version "0.1.4"}
+         com.github.luben/zstd-jni           {:mvn/version "1.5.5-11"}
+         ;; graph some stuff
+         djblue/portal                       {:mvn/version "0.59.1"}
+
+         ;; cljs
+         thheller/shadow-cljs      {:mvn/version "2.22.10"}
+         binaryage/devtools        {:mvn/version "1.0.4"}
+         org.clojure/clojurescript {:mvn/version "1.11.60"}
+
+         ;; cljs - github
+         uix/uix.core
+         {:git/url   "https://github.com/roman01la/uix.git"
+          :deps/root "core"
+          :sha       "fa84048386d5794d8884242fac5af2370e42e1a5"}
+         uix/uix.dom
+         {:git/url   "https://github.com/roman01la/uix.git"
+          :deps/root "dom"
+          :sha       "fa84048386d5794d8884242fac5af2370e42e1a5"}
+         uix/uix.rn
+         {:git/url   "https://github.com/roman01la/uix.git"
+          :deps/root "rn"
+          :sha       "fa84048386d5794d8884242fac5af2370e42e1a5"}}
+
+ :aliases
+ {:jvm-base
+  {:jvm-opts ["--add-opens=java.base/java.nio=ALL-UNNAMED"
+              "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED"]
+   :dev
+   {:jvm-opts
+    ["--add-opens=java.base/java.nio=ALL-UNNAMED"
+     "--add-opens=java.base/java.io=ALL-UNNAMED"
+     "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED"
+     "--add-opens=java.base/java.util=ALL-UNNAMED"
+     "--add-opens=jdk.compiler/com.sun.tools.javac=ALL-UNNAMED"
+     "--add-opens=java.base/java.lang=ALL-UNNAMED"
+     "--add-opens=java.base/java.lang.reflect=ALL-UNNAMED"
+     "--add-opens=java.base/java.util=ALL-UNNAMED"
+     "--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED"
+     "--add-exports=java.base/sun.nio.ch=ALL-UNNAMED"
+     "--add-exports=jdk.unsupported/sun.misc=ALL-UNNAMED"
+     "--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED"
+     "-Djdk.attach.allowAttachSelf"
+     "-Dorg.jboss.logging.provider=slf4j"
+     "-XX:-OmitStackTraceInFastThrow"
+     "-Xmx20g"]
+    :extra-paths
+    ["scripts" "test"]
+    :extra-deps
+    {djblue/portal                          {:mvn/version "0.52.2"}
+     clj-kondo/clj-kondo                    {:mvn/version "2022.12.10"}}}
+   }
+  :global
+  {:jvm-opts ["-Djdk.attach.allowAttachSelf"]}}}
