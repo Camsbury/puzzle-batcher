@@ -6,18 +6,31 @@
    [portal.api :as p]))
 
 (defn grab-ids
-  [base-rating]
-  (->> @core/puzzles
-       (filter #(> (:nb-plays %) 500))
-       (filter #(<= (count (:moves %)) 4))
-       (filter #(> (:rating %) base-rating))
-       (filter #(< (:rating %) (+ 10 base-rating)))
-       shuffle
-       (map :puzzle-id)
-       (str/join "\n")))
+  [base-rating & {:keys [band
+                         play-count
+                         count?]
+                  :or   {band       10
+                         play-count 1000}}]
+  (let [puzzles
+        (->> @core/puzzles
+             (filter #(> (:nb-plays %) play-count))
+             (filter #(<= (count (:moves %)) 4))
+             (filter #(> (:rating %) base-rating))
+             (filter #(< (:rating %) (+ band base-rating))))]
+    (if count?
+      (count puzzles)
+      (->> puzzles
+           shuffle
+           (map :puzzle-id)
+           (str/join "\n")))))
 
 (comment
-  (grab-ids 900)
+  (grab-ids 900 :play-count 2000)
+  (grab-ids 1000 :play-count 2500)
+  (grab-ids 1100 :play-count 2500)
+  (grab-ids 1250 :play-count 2500)
+  (grab-ids 1350 :play-count 2500)
+  (grab-ids 1400 :play-count 2500)
 
 
   (def p (p/open))
@@ -25,8 +38,8 @@
   (->> @core/puzzles
        (filter #(<= (count (:moves %)) 4))
        (filter #(>= (:nb-plays %) 500))
-       (filter #(>= (:rating %) 1800))
-       (filter #(<= (:rating %) 2300))
+       (filter #(>= (:rating %) 1000))
+       (filter #(<= (:rating %) 1500))
        (map :rating)
        (#(plot/histogram % :title "rating"))
        (#(with-meta

@@ -3,9 +3,9 @@
    [camel-snake-kebab.core :as csk]
    [clojure.java.io  :as io]
    [clojure.data.csv :as csv]
-   [clojure.edn      :as edn]
-   [clojure.set      :as set]
-   [clojure.string   :as str])
+   [clojure.string   :as str]
+   [taoensso.nippy :as nippy]
+   )
   (:import
    [java.io BufferedReader InputStreamReader]
    [com.github.luben.zstd ZstdInputStream]))
@@ -23,6 +23,7 @@
        (map csk/->kebab-case-keyword)
        (into #{})))
 
+#_
 (def puzzles
   (delay
     (let [raw
@@ -46,6 +47,15 @@
            (map #(update % :rating parse-long))
            (map #(update % :rating-deviation parse-long))
            (map #(update % :nb-plays parse-long))))))
+
+(def puzzles
+  (delay
+    (nippy/thaw-from-file "resources/puzzles.nippy")))
+
+(comment
+  (nippy/freeze-to-file
+    "resources/puzzles.nippy"
+    @puzzles))
 
 #_
 (def themes
